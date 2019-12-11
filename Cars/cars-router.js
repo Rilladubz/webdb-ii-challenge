@@ -16,6 +16,44 @@ router.get("/", (req, res) => {
       res.status(404).json({ errorMessage: "Sorry, no cars founud", err });
     });
 });
+
+router.post("/", validateBody, (req, res) => {
+  db("cars")
+    .insert(req.body, "id")
+    .then(ids => {
+      const id = ids[0];
+
+      return db("cars")
+        .select("vin", "year", "make", "model")
+        .where({ id })
+        .first()
+        .then(car => {
+          res.status(201).json({ car });
+        });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ errorMessage: "Error while trying to post new car" });
+    });
+});
+
 //middleware
+
+function validateBody(req, res, next) {
+  const body = req.body;
+
+  if (body.model < 1) {
+    res.status(400).json({ errorMessage: "Model is required!" });
+  } else if (body.vin < 1) {
+    res.status(400).json({ errorMessage: "Vin is required!" });
+  } else if (body.year < 1) {
+    res.status(400).json({ errorMessage: "Year is required!" });
+  } else if (body.make < 1) {
+    res.status(400).json({ errorMessage: "Make is required!" });
+  } else {
+    next();
+  }
+}
 
 module.exports = router;

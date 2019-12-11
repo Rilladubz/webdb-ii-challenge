@@ -10,9 +10,9 @@ exports.up = function(knex) {
 
     tbl.integer("year", 4).notNullable();
 
-    tbl.string("make", 128).notNullable();
+    tbl.string("make").notNullable();
 
-    tbl.string("model", 128).notNullable();
+    tbl.string("model").notNullable();
 
     tbl.string("color");
   });
