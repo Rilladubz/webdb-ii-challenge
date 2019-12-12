@@ -14,6 +14,12 @@ exports.up = function(knex) {
 
     tbl.string("model").notNullable();
 
+    tbl.integer("mileage", 6).notNullable();
+
+    tbl.string("transmission").notNullable();
+
+    tbl.string("title"); //clean, salvage, not required
+
     tbl.string("color");
   });
 };

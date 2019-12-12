@@ -51,6 +51,10 @@ function validateBody(req, res, next) {
     res.status(400).json({ errorMessage: "Year is required!" });
   } else if (body.make < 1) {
     res.status(400).json({ errorMessage: "Make is required!" });
+  } else if (body.mileage < 1) {
+    res.status(400).json({ errorMessage: "Mileage is required!" });
+  } else if (body.transmission < 1) {
+    res.status(400).json({ errorMessage: "Transmission is required!" });
   } else {
     next();
   }
